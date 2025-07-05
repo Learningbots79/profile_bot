@@ -21,7 +21,7 @@
 - 🔖 Clean file structure for easy upgrade
 
 ## File Structure
-
+```
 profile_bot/
 ├── main.py # Bot startup
 ├── handlers.py # Commands: /start, /view, /edit, /delete
@@ -31,7 +31,7 @@ profile_bot/
 ├── data.json # User storage
 ├── .env # BOT_TOKEN, ADMINS
 └── requirements.txt # Required libraries
-
+```
 ---
 
 ## How TO Run
