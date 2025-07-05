@@ -71,5 +71,6 @@ MIT License – free to use and remix!
 </a>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4-red?style=for-the-badge" alt="Your one star our motivation">
+  <img src="https://img.shields.io/badge/🌟_Drop_a_Star-Your_Motivation-orange?style=for-the-badge" alt="Drop a Star">
 </p>
+
