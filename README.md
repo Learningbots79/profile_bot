@@ -76,3 +76,5 @@ MIT License – free to use and remix!
 <p align="center">
   <img src="https://img.shields.io/badge/🌟_Drop_a_Star-Its_our_Motivation-white?style=for-the-badge" alt="Drop a Star">
 </p>
+
+---
