@@ -71,11 +71,5 @@ MIT License – free to use and remix!
 </a>
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=F97316&center=true&vCenter=true&width=900&lines=🌟+Drop+a+Star+🌟" alt="Typing SVG" />
-</p>
-
-
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4-red?style=for-the-badge" alt="Made with Love">
+  <img src="https://img.shields.io/badge/Made%20with-%E2%9D%A4-red?style=for-the-badge" alt="Your one star our motivation">
 </p>
