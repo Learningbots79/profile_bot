@@ -4,12 +4,9 @@ from dotenv import load_dotenv
 load_dotenv()
 ADMIN_IDS = os.getenv("ADMINS", "").split(",")
 
-
-# 
 def is_admin(user_id: int) -> bool:
     return str(user_id) in ADMIN_IDS
 
-# 
 def admin_only(func):
     @wraps(func)
     async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
