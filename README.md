@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 <h1 align="centre">🤖 Telegram Profile Bot </h1>
 <p align="center">
     A clean and fully working Telegram Bot that collects user profile data (name, age, phone), with view, edit, delete, and admin commands - built in Python with 💌.
@@ -84,3 +85,6 @@ MIT License – free to use and remix!
 =======
 # profile_bot
 >>>>>>> 36512b3034a4953df74e09564dc15a91e924fd66
+=======
+# profile_bot
+>>>>>>> 91b148588f8484c58b288590d19d95d2dffc201d
