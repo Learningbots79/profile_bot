@@ -70,6 +70,8 @@ MIT License – free to use and remix!
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="Buy Me A Coffee" />
 </a>
 
+---
+
 <p align="center">
   <img src="https://img.shields.io/badge/🌟_Drop_a_Star-Its_our_Motivation-white?style=for-the-badge" alt="Drop a Star">
 </p>
