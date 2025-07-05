@@ -65,15 +65,15 @@ MIT License – free to use and remix!
 
 [![Give Credit](https://img.shields.io/badge/%F0%9F%92%A1%20Give%20Credit-blueviolet?style=for-the-badge)](https://github.com/Learningbots79) -  If you use this project....
 ---
----
+
 <a href="https://files.catbox.moe/98iwcs.jpg" target="_blank">
   <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="Buy Me A Coffee" />
 </a>
 
 ---
-<p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=F97316&center=true&vCenter=true&width=900&lines=🌟+Drop+a+Star+🌟" alt="Typing SVG">
-</p>
+<a align="center">
+  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=F97316&center=true&vCenter=true&width=900&lines=🌟+Drop+a+Star+🌟" alt="Typing SVG" />
+</a>
 
 
 <p align="center">
