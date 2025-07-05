@@ -7,7 +7,7 @@
 <p align="center">
     <img src="https://img.shields.io/badge/python-3.10-blue?logo=python&style=flat-square">
     <img src="https://img.shields.io/badge/telegram%20bot-pro-success?logo=telegram&style=flat-square">
-    <img src="https://img.shields.io/github/license/yourusername/profile_bot?style=flat-square">
+    <img src="https://img.shields.io/github/license/Learningbots79/profile_bot?style=flat-square">
 </p>
 
 ## 🚀 Features
