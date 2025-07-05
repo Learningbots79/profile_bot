@@ -72,7 +72,7 @@ MIT License – free to use and remix!
 
 ---
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=28&pause=1000&color=F97316&center=true&vCenter=true&width=900&lines=🌟+Drop+a+Star+🌟" alt="Typing SVG" />
+  <img src="https://img.shields.io/badge/🌟-Drop_a_Star-orange?style=for-the-badge" />
 </p>
 
 
