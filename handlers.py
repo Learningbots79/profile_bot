@@ -164,6 +164,25 @@ async def all_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg += f"Phone: {info.get('phone')}\n"
     await update.message.reply_text(msg)
 
+async def search_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        return await update.message.reply_text("Usage: /search <name>")
+
+        name = "".join(context.args).lower()
+        users = load_all_users()
+
+        results = []
+        for uid, info in users.items():
+            if name in info.get("name", "").lower():
+                results.apppend(f"{info['name']} (ID: {uid})")
+
+        if results:
+            await update.message.reply_text("Found:\n" + "\n".join(results))
+        else:
+            await update.message.reply_text("No user found")
+
+
+
 # Credit: Project by LearningBot79
 # GitHub: https://github.com/Learningbots79
 # Telegram Channel: https://t.me/learningbots79

@@ -50,6 +50,9 @@ def load_all_users():
             return {}
     return {}
 
+def get_user(user_id):
+    return load_all_users().get(str(user_id))
+
 # Credit: Project by LearningBot79
 # GitHub: https://github.com/Learningbots79
 # Telegram Channel: https://t.me/learningbots79
