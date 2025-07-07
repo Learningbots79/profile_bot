@@ -25,10 +25,11 @@
 
 <p align="center">
   <img
-    src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F75C7E&center=true&centerVertically=true&width=700&lines=🚧+Still+working+on+this+code...;⚙️+Adding+new+features+and+fixing+bugs..."
+    src="https://readme-typing-svg.herokuapp.com?font=Fira+Code&pause=1000&color=F75C7E&center=true&vCenter=true&width=700&lines=🚧+Still+working+on+this+code...;⚙️+Adding+new+features+and+fixing+bugs..."
     alt="Typing SVG"
   />
 </p>
+
 
 
 
