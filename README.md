@@ -21,10 +21,13 @@
     - `/broadcast <message>` - send message to all users
 - 🔖 Clean file structure for easy upgrade
 
-
+--
 
 <p align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F75C7E&center=true&vCenter=true&width=700&lines=🚧+Still+working+on+this+code+...;⚙️+Adding+new+features+and+fixing+bugs+..." alt="Typing SVG" />
+  <img
+    src="https://readme-typing-svg.demolab.com?font=Fira+Code&pause=1000&color=F75C7E&center=true&vCenter=true&width=700&lines=🚧%20Still%20working%20on%20this%20code...%0A⚙️%20Adding%20new%20features%20and%20fixing%20bugs..."
+    alt="Typing SVG"
+  />
 </p>
 
 
