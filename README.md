@@ -7,7 +7,7 @@
 <p align="center">
     <img src="https://img.shields.io/badge/python-3.10-blue?logo=python&style=flat-square">
     <img src="https://img.shields.io/badge/telegram%20bot-pro-success?logo=telegram&style=flat-square">
-    <img src="https://img.shields.io/github/license/yourusername/profile_bot?style=flat-square">
+    <img src="https://img.shields.io/github/license/Learningbots79/profile_bot?style=flat-square">
 </p>
 
 ## 🚀 Features
@@ -64,7 +64,8 @@ python main.py
 📄 License  
 MIT License – free to use and remix!
 
-[![Give Credit](https://img.shields.io/badge/%F0%9F%92%A1%20Give%20Credit-blueviolet?style=for-the-badge)](https://github.com/Learningbots79) -  If you use this project....
+[![Give Credit](https://img.shields.io/badge/%F0%9F%92%A1%20Give%20Credit-blueviolet?style=for-the-badge)](https://github.com/Learningbots79) -  If you use this project
+
 ---
 
 <a href="https://files.catbox.moe/98iwcs.jpg" target="_blank">
