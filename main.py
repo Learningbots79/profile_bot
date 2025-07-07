@@ -16,10 +16,10 @@ from handlers import (
     edit_profile,
     button_handler,
     handle_message,
-    list_users,
     broadcast,
     search_user,
-    all_users
+    all_users,
+    short_command
 )
 
 # Load BOT_TOKEN from .env
@@ -36,11 +36,10 @@ async def main():
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("view", view_profile))
     app.add_handler(CommandHandler("edit", edit_profile))
-    app.add_handler(CommandHandler("users", list_users))
     app.add_handler(CommandHandler("broadcast", broadcast))
     app.add_handler(CommandHandler("all_users", all_users))
     app.add_handler(CommandHandler("search", search_user))
-
+    app.add_handler(CommandHandler("short", short_command))
     # Button callback handler
     app.add_handler(CallbackQueryHandler(button_handler))
 

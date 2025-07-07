@@ -1,4 +1,7 @@
 import os
+from functools import wraps  # ✅
+from telegram import Update
+from telegram.ext import ContextTypes
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,8 +12,8 @@ def is_admin(user_id: int) -> bool:
 
 def admin_only(func):
     @wraps(func)
-    async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    async def wrapper(update: Update, context: ContextTypes.DEFAULT_TYPE, *args, **kwargs):
         if not is_admin(update.effective_user.id):
-            return await update.message.reply_text("Access Denied")
+            return await update.message.reply_text("🚫 Access Denied")
         return await func(update, context, *args, **kwargs)
     return wrapper

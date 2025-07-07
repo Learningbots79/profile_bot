@@ -5,6 +5,7 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from utils import is_admin, admin_only
+from shortener import shortern_url
 from database import save_data, load_data, delete_data, load_all_users
 
 # /start command
@@ -112,20 +113,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             await update.message.reply_text("⚠️ No data found.")
         context.user_data.clear()
 
-async def list_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not is_admin(update.effective_user.id):
-        return await update.message.reply_text("Acces Denied")
-
-        users = load_all_users()
-        if not users:
-            return await update.message.reply_text("NO user found")
-
-        text = "ALL Users :\n"
-        for uid, data in users.items():
-            text += f"- {data.get('name', 'No Name')} (ID: {uid})\n"
-
-            await update.message.reply_text(text)
-
+# Broadcast command
 async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_admin(update.effective_user.id):
         return await update.message.reply_text("Access Denied ❌")
@@ -135,8 +123,8 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     message = " ".join(context.args)
     users = load_all_users()
-
     count = 0
+
     for uid in users:
         try:
             await context.bot.send_message(chat_id=int(uid), text=message)
@@ -146,9 +134,7 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     await update.message.reply_text(f"✅ Message sent to {count} users.")
 
-
-# ADNIN ONLY
-
+# Admin-only: list all users
 @admin_only
 async def all_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
     data = load_all_users()
@@ -156,33 +142,39 @@ async def all_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No users found.")
         return
 
-    msg = "All user:\n\n"
+    msg = "All users:\n\n"
     for uid, info in data.items():
-        msg += f"ID: {id}\n"
+        msg += f"ID: {uid}\n"
         msg += f"Name: {info.get('name')}\n"
         msg += f"Age: {info.get('age')}\n"
-        msg += f"Phone: {info.get('phone')}\n"
+        msg += f"Phone: {info.get('phone')}\n\n"
     await update.message.reply_text(msg)
 
+# /search command
 async def search_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
         return await update.message.reply_text("Usage: /search <name>")
 
-        name = "".join(context.args).lower()
-        users = load_all_users()
+    name = " ".join(context.args).lower()
+    users = load_all_users()
 
-        results = []
-        for uid, info in users.items():
-            if name in info.get("name", "").lower():
-                results.apppend(f"{info['name']} (ID: {uid})")
+    results = []
+    for uid, info in users.items():
+        if name in info.get("name", "").lower():
+            results.append(f"{info['name']} (ID: {uid})")
 
-        if results:
-            await update.message.reply_text("Found:\n" + "\n".join(results))
-        else:
-            await update.message.reply_text("No user found")
+    if results:
+        await update.message.reply_text("🔍 Found:\n" + "\n".join(results))
+    else:
+        await update.message.reply_text("No user found.")
 
+# /short command
+async def short_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if not context.args:
+        return await update.message.reply_text("Usage: `/short <URL>`", parse_mode="Markdown")
 
+    long_url = context.args[0]
+    await update.message.reply_text("🔗 Shortening your URL...")
 
-# Credit: Project by LearningBot79
-# GitHub: https://github.com/Learningbots79
-# Telegram Channel: https://t.me/learningbots79
+    short_url = shortern_url(long_url)
+    await update.message.reply_text(f"✅ Short URL:\n{short_url}")
