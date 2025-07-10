@@ -4,31 +4,75 @@
 
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
-from utils import is_admin, admin_only
+from utils import is_admin, admin_only, get_arg
 from shortener import shortern_url
 from database import save_data, load_data, delete_data, load_all_users
 
 # /start command
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    url = "https://files.catbox.moe/zdo9v5.jpg"
+    caption = (
+
+        "👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀ ʙᴏᴛ ᴛʜᴀᴛ’ꜱ sᴛɪʟʟ ʙᴇɪɴɢ ʙᴜɪʟᴛ...\n\n"
+        "※ ᴄᴜʀʀᴇɴᴛ ꜰᴇᴀᴛᴜʀᴇꜱ:\n"
+        "• sᴀᴠᴇ ʏᴏᴜʀ ᴘʀᴏꜰɪʟᴇ (ɴᴀᴍᴇ, ᴀɢᴇ, ᴘʜᴏɴᴇ)\n"
+        "• ᴇᴅɪᴛ ʏᴏᴜʀ ɪɴꜰᴏ ᴀɴʏᴛɪᴍᴇ\n"
+        "• ꜱʜᴏʀᴛᴇɴ ʟɪɴᴋꜱ ᴇᴀꜱɪʟʏ\n\n"
+        "ᴍᴏʀᴇ ꜰᴇᴀᴛᴜʀᴇꜱ ᴄᴏᴍɪɴɢ...\n"
+        "ꜱɪʟᴇɴᴛʟʏ. ᴅᴀɪʟʏ.\n\n"
+        "ᴍᴀᴅᴇ ᴡɪᴛʜ 💌\n"
+        "ᴄʀᴇᴅɪᴛ ɢᴏᴇꜱ ᴛᴏ ʏᴀꜱʜ."
+    )
+    kb = [
+        [
+            InlineKeyboardButton("Add details 📄", callback_data="start1_command"),
+            InlineKeyboardButton("Update details", callback_data="update_profile")
+        ],
+        [
+            InlineKeyboardButton("View Profile", callback_data="view_profile"),
+            InlineKeyboardButton("Link Shorten", callback_data="short_command")
+        ]
+    ]
+    await update.message.reply_photo(
+        photo=url,
+        caption=caption,
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup(kb)
+    )
+
+
+
+# start saving details
+async def start1_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = update.message or update.callback_query.message
     context.user_data.clear()
     context.user_data["step"] = "name"
-    await update.message.reply_text("👋 Hey! What's your name?")
+    await message.reply_text("👋 Hey! What's your name?")
 
 # /view command
 async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
+
+    query = update.callback_query
+    message = update.message or update.callback_query.message
+
+    if query:
+        await query.answer(cache_time=0)
+
+
     data = load_data(update.effective_user.id)
     if data:
-        await update.message.reply_text(
+        await message.reply_text(
             f"🧾 Your Profile:\n"
             f"Name: {data.get('name')}\n"
             f"Age: {data.get('age')}\n"
             f"Phone: {data.get('phone')}"
         )
     else:
-        await update.message.reply_text("🚫 No profile found. Use /start to create one.")
+        await message.reply_text("🚫 No profile found. Use /start to create one.")
 
 # /edit command
-async def edit_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def update_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = update.message or update.callback_query.message
     data = load_data(update.effective_user.id)
     if data:
         kb = InlineKeyboardMarkup([
@@ -38,9 +82,9 @@ async def edit_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ],
             [InlineKeyboardButton("Edit Phone", callback_data="edit_phone")]
         ])
-        await update.message.reply_text("✏️ Choose what you want to edit:", reply_markup=kb)
+        await message.reply_text("✏️ Choose what you want to edit:", reply_markup=kb)
     else:
-        await update.message.reply_text("🚫 No data to edit. Use /start first.")
+        await message.reply_text("🚫 No data to edit. Use /start first.")
 
 # Handle button callbacks
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -118,7 +162,8 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not is_admin(update.effective_user.id):
         return await update.message.reply_text("Access Denied ❌")
 
-    if not context.args:
+    message = get_arg(context)
+    if not message:
         return await update.message.reply_text("Usage: /broadcast <your message>")
 
     message = " ".join(context.args)
@@ -137,10 +182,15 @@ async def broadcast(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Admin-only: list all users
 @admin_only
 async def all_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    url = "https://files.catbox.moe/9hj4st.jpg"
+    kb = [
+        [
+            InlineKeyboardButton("HELLO BOSS", callback_data="boss")
+        ]
+    ]
     data = load_all_users()
     if not data:
         await update.message.reply_text("No users found.")
-        return
 
     msg = "All users:\n\n"
     for uid, info in data.items():
@@ -148,7 +198,12 @@ async def all_users(update: Update, context: ContextTypes.DEFAULT_TYPE):
         msg += f"Name: {info.get('name')}\n"
         msg += f"Age: {info.get('age')}\n"
         msg += f"Phone: {info.get('phone')}\n\n"
-    await update.message.reply_text(msg)
+    await update.message.reply_photo(
+        photo=url,
+        caption=msg,
+        parse_mode="HTML",
+        reply_markup=InlineKeyboardMarkup(kb)
+    )
 
 # /search command
 async def search_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -170,11 +225,12 @@ async def search_user(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # /short command
 async def short_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    message = update.message or update.callback_query.message
     if not context.args:
-        return await update.message.reply_text("Usage: `/short <URL>`", parse_mode="Markdown")
+        return await message.reply_text("Usage: `/short <URL>`", parse_mode="Markdown")
 
     long_url = context.args[0]
-    await update.message.reply_text("🔗 Shortening your URL...")
+    await message.reply_text("🔗 Shortening your URL...")
 
     short_url = shortern_url(long_url)
-    await update.message.reply_text(f"✅ Short URL:\n{short_url}")
+    await message.reply_text(f"✅ Short URL:\n{short_url}")

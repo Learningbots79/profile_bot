@@ -13,7 +13,7 @@ from telegram.ext import (
 from handlers import (
     start_command,
     view_profile,
-    edit_profile,
+    update_profile,
     button_handler,
     handle_message,
     broadcast,
@@ -32,16 +32,26 @@ if not BOT_TOKEN:
 async def main():
     app = Application.builder().token(BOT_TOKEN).build()
 
-    # Command handlers
+
+
+        # Command handlers
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("view", view_profile))
-    app.add_handler(CommandHandler("edit", edit_profile))
+    app.add_handler(CommandHandler("edit", update_profile))
     app.add_handler(CommandHandler("broadcast", broadcast))
     app.add_handler(CommandHandler("all_users", all_users))
     app.add_handler(CommandHandler("search", search_user))
     app.add_handler(CommandHandler("short", short_command))
-    # Button callback handler
+
+    # Button callback handlers (for buttons in /start)
+    app.add_handler(CallbackQueryHandler(view_profile,  pattern="^view_profile$"))
+    app.add_handler(CallbackQueryHandler(update_profile, pattern="^update_profile$"))
+    app.add_handler(CallbackQueryHandler(short_command,  pattern="^short_command$"))
+    app.add_handler(CallbackQueryHandler(start_command,   pattern="^start1_command$"))
+
     app.add_handler(CallbackQueryHandler(button_handler))
+
+
 
     # Message handler for text inputs (name, age, etc.)
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))

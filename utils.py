@@ -17,3 +17,14 @@ def admin_only(func):
             return await update.message.reply_text("🚫 Access Denied")
         return await func(update, context, *args, **kwargs)
     return wrapper
+
+def get_arg(context):
+    return " ".join(context.args) if context.args else None
+
+def format_user(uid, data):
+    return(
+        f"Id: {id}\n"
+        f"Name : {data.get('name', 'N/A')}\n"
+        f"Age : {data.get('age', 'N/A')}\n"
+        f"Phone : {data.get('phone', 'N/A')}"
+    )
