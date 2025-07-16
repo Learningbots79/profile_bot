@@ -5,8 +5,9 @@
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from utils import is_admin, admin_only, get_arg
-from shortener import shortern_url
+from LearningBots.plugins.shortener import shortern_url
 from database import save_data, load_data, delete_data, load_all_users
+from LearningBots.plugins.image import image_button, handle_image_name
 
 # /start command
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -31,9 +32,15 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [
             InlineKeyboardButton("View Profile", callback_data="view_profile"),
             InlineKeyboardButton("Link Shorten", callback_data="short_command")
+        ],
+        [
+            InlineKeyboardButton("Create Image", callback_data="image_button")
         ]
     ]
-    await update.message.reply_photo(
+
+    message = update.message or update.callback_query.message
+
+    await message.reply_photo(
         photo=url,
         caption=caption,
         parse_mode="HTML",
@@ -234,3 +241,12 @@ async def short_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     short_url = shortern_url(long_url)
     await message.reply_text(f"✅ Short URL:\n{short_url}")
+
+
+# == image handler + steps handler  == #
+
+async def handle_all_text_inputs(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if context.user_data.get("image_name_state"):
+        return await handle_image_name(update, context)
+    else:
+        return await handle_message(update, context)

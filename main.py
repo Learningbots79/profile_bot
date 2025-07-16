@@ -6,12 +6,14 @@ import os
 import sys
 import asyncio
 from dotenv import load_dotenv
+from LearningBots.plugins.image import image_button, handle_image_name
 from telegram.ext import (
     Application, CommandHandler, CallbackQueryHandler, MessageHandler,
     filters, ContextTypes
 )
 from handlers import (
     start_command,
+    start1_command,
     view_profile,
     update_profile,
     button_handler,
@@ -19,7 +21,8 @@ from handlers import (
     broadcast,
     search_user,
     all_users,
-    short_command
+    short_command,
+    handle_all_text_inputs
 )
 
 # Load BOT_TOKEN from .env
@@ -42,19 +45,21 @@ async def main():
     app.add_handler(CommandHandler("all_users", all_users))
     app.add_handler(CommandHandler("search", search_user))
     app.add_handler(CommandHandler("short", short_command))
+    app.add_handler(CommandHandler("image", image_button))
 
     # Button callback handlers (for buttons in /start)
     app.add_handler(CallbackQueryHandler(view_profile,  pattern="^view_profile$"))
     app.add_handler(CallbackQueryHandler(update_profile, pattern="^update_profile$"))
     app.add_handler(CallbackQueryHandler(short_command,  pattern="^short_command$"))
-    app.add_handler(CallbackQueryHandler(start_command,   pattern="^start1_command$"))
+    app.add_handler(CallbackQueryHandler(start_command,   pattern="^start_command$"))
+    app.add_handler(CallbackQueryHandler(start1_command, pattern="^start1_command$"))
+    app.add_handler(CallbackQueryHandler(image_button, pattern="^image_button$"))
 
     app.add_handler(CallbackQueryHandler(button_handler))
 
 
+    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_all_text_inputs))
 
-    # Message handler for text inputs (name, age, etc.)
-    app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     print("✅ Bot started...")
     await app.run_polling()
