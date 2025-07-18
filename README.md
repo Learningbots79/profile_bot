@@ -15,13 +15,17 @@
 - 🌟 Collects **name, age, phone** from users
 - 📝 Inline button for **Confirm / Cancel / Edit**
 - 📁 Saves data in `data.json`
-- 🔐 `/view`, `/edit`, `/delete` your profile
+- 🫙 Referral data in `referral_data.json`
+- 👪 Referral System
+- 🔗 Link Shotner Command:
+  - `/short < Link >`
+- 📸 Text on Image
 - 🛡️ Admin-Only Command:
     - `/all_users` -list all users
     - `/broadcast <message>` - send message to all users
 - 🔖 Clean file structure for easy upgrade
 
---
+---
 
 <p align="center">
   <img
@@ -31,21 +35,6 @@
 </p>
 
 
-
-
-
-## File Structure
-```
-profile_bot/
-├── main.py # Bot startup
-├── handlers.py # Commands: /start, /view, /edit, /delete
-├── buttons.py # Inline buttons logic
-├── database.py # JSON save/load functions
-├── utils.py # Admin check
-├── data.json # User storage
-├── .env # BOT_TOKEN, ADMINS
-└── requirements.txt # Required libraries
-```
 ---
 
 ## How TO Run
