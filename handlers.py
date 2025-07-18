@@ -6,15 +6,62 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 from utils import is_admin, admin_only, get_arg
 from LearningBots.plugins.shortener import shortern_url
+from LearningBots.plugins.referral import my_referral, load_refer_data, save_refer_data
 from database import save_data, load_data, delete_data, load_all_users
 from LearningBots.plugins.image import image_button, handle_image_name
 
 # /start command
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    user_id = str(user.id)
+    data = load_refer_data()
+
+    # Get referral id
+    args = context.args
+    referrer_id = args[0] if args else None
+
+    if user_id not in data:
+        data[user_id] = {
+            "referrals": [],
+            "referred_by": None,
+            "rewards": 0
+        }
+
+        # Handle referral
+        if referrer_id and referrer_id != user_id and referrer_id in data:
+            data[user_id]["referred_by"] = referrer_id
+
+            if user_id not in data[referrer_id]["referrals"]:
+                data[referrer_id]["referrals"].append(user_id)
+
+                # Reward 1 rupee
+                if "rewards" not in data[referrer_id]:
+                    data[referrer_id]["rewards"] = 0
+
+                data[referrer_id]["rewards"] += 1
+
+                # notify referrer
+                await context.bot.send_message(
+                    chat_id=int(referrer_id),
+                    text=(
+                        f"🎉 *Congrats!* You invited a new user!\n"
+                        f"💸 You've earned ₹1 for this referral.\n"
+                        f"👥 Total referrals: {len(data[referrer_id]['referrals'])}\n"
+                        f"💰 Total rewards: ₹{data[referrer_id]['rewards']}"
+                    ),
+                    parse_mode="Markdown"
+                )
+
+        save_refer_data(data)
+
+
+        # start message
+            
+
     url = "https://files.catbox.moe/zdo9v5.jpg"
     caption = (
 
-        "👋 ᴡᴇʟᴄᴏᴍᴇ ᴛᴏ ᴀ ʙᴏᴛ ᴛʜᴀᴛ’ꜱ sᴛɪʟʟ ʙᴇɪɴɢ ʙᴜɪʟᴛ...\n\n"
+        f"👋 Hey {user.first_name}\n\n"
         "※ ᴄᴜʀʀᴇɴᴛ ꜰᴇᴀᴛᴜʀᴇꜱ:\n"
         "• sᴀᴠᴇ ʏᴏᴜʀ ᴘʀᴏꜰɪʟᴇ (ɴᴀᴍᴇ, ᴀɢᴇ, ᴘʜᴏɴᴇ)\n"
         "• ᴇᴅɪᴛ ʏᴏᴜʀ ɪɴꜰᴏ ᴀɴʏᴛɪᴍᴇ\n"
@@ -34,7 +81,8 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             InlineKeyboardButton("Link Shorten", callback_data="short_command")
         ],
         [
-            InlineKeyboardButton("Create Image", callback_data="image_button")
+            InlineKeyboardButton("Create Image", callback_data="image_button"),
+            InlineKeyboardButton("Referral", callback_data="my_referral")
         ]
     ]
 
@@ -75,7 +123,7 @@ async def view_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
             f"Phone: {data.get('phone')}"
         )
     else:
-        await message.reply_text("🚫 No profile found. Use /start to create one.")
+        await message.reply_text("🚫 No profile found. Create one click on add details 📄.")
 
 # /edit command
 async def update_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -91,7 +139,7 @@ async def update_profile(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ])
         await message.reply_text("✏️ Choose what you want to edit:", reply_markup=kb)
     else:
-        await message.reply_text("🚫 No data to edit. Use /start first.")
+        await message.reply_text("🚫 No data to edit.")
 
 # Handle button callbacks
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):

@@ -6,7 +6,9 @@ import os
 import sys
 import asyncio
 from dotenv import load_dotenv
-from LearningBots.plugins.image import image_button, handle_image_name
+from LearningBots import plugins
+from LearningBots.plugins.image import image_button
+from LearningBots.plugins.referral import my_referral
 from telegram.ext import (
     Application, CommandHandler, CallbackQueryHandler, MessageHandler,
     filters, ContextTypes
@@ -46,6 +48,7 @@ async def main():
     app.add_handler(CommandHandler("search", search_user))
     app.add_handler(CommandHandler("short", short_command))
     app.add_handler(CommandHandler("image", image_button))
+    app.add_handler(CommandHandler("my_referral", my_referral))
 
     # Button callback handlers (for buttons in /start)
     app.add_handler(CallbackQueryHandler(view_profile,  pattern="^view_profile$"))
@@ -54,6 +57,7 @@ async def main():
     app.add_handler(CallbackQueryHandler(start_command,   pattern="^start_command$"))
     app.add_handler(CallbackQueryHandler(start1_command, pattern="^start1_command$"))
     app.add_handler(CallbackQueryHandler(image_button, pattern="^image_button$"))
+    app.add_handler(CallbackQueryHandler(my_referral, pattern="^my_referral$"))
 
     app.add_handler(CallbackQueryHandler(button_handler))
 
